@@ -76,14 +76,13 @@ fun ChatScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = remember { ChatViewModel() }
-    val messagesList = viewModel.messages.collectAsState()
     val messageText = remember { mutableStateOf("") }
     // TODO Задание 3: добавьте focusRequester
     val focusRequester = remember { FocusRequester() }
-    val shouldShowKeyboard by viewModel.shouldShowKeyboard.collectAsState()
+    val chatState by viewModel.chatState.collectAsState()
 
-    LaunchedEffect(shouldShowKeyboard) {
-        if (shouldShowKeyboard) {
+    LaunchedEffect(chatState.shouldShowKeyboard) {
+        if (chatState.shouldShowKeyboard) {
             focusRequester.requestFocus()
         }
     }
@@ -96,7 +95,7 @@ fun ChatScreen(
                 .weight(1f)
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
-            items(messagesList.value) { message ->
+            items(chatState.messages) { message ->
                 when (message) {
                     is Message.MyMessage -> MyMessageCard(message)
                     is Message.OtherMessage -> OtherMessageCard(message)
