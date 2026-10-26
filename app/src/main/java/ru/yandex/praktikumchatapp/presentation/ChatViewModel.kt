@@ -20,6 +20,8 @@ class ChatViewModel(
     val messages: StateFlow<List<Message>> = _messages
 
     // TODO Задание 3: добавьте состояние shouldShowKeyboard
+    private val _shouldShowKeyboard = MutableStateFlow<Boolean>(false)
+    val shouldShowKeyboard: StateFlow<Boolean> = _shouldShowKeyboard
 
     // TODO Задание 4: замените messages и shouldShowKeyboard на state
 
@@ -30,6 +32,7 @@ class ChatViewModel(
                     _messages.update {
                         message -> message + Message.OtherMessage(response)
                     }
+                    _shouldShowKeyboard.value = true
                 }
             }
         }
