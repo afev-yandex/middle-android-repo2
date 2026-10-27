@@ -26,9 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.yandex.praktikumchatapp.presentation.ChatViewModel
 import ru.yandex.praktikumchatapp.presentation.Message
 import ru.yandex.praktikumchatapp.ui.theme.PraktikumChatAppTheme
@@ -79,7 +78,7 @@ fun ChatScreen(
     val messageText = remember { mutableStateOf("") }
     // TODO Задание 3: добавьте focusRequester
     val focusRequester = remember { FocusRequester() }
-    val chatState by viewModel.chatState.collectAsState()
+    val chatState by viewModel.chatState.collectAsStateWithLifecycle()
 
     LaunchedEffect(chatState.shouldShowKeyboard) {
         if (chatState.shouldShowKeyboard) {
